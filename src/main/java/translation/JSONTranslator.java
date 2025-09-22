@@ -51,7 +51,9 @@ public class JSONTranslator implements Translator {
 
                 List<String> languages = new ArrayList<>();
 
-                // TODO Task C: record this countryCode in the correct instance variable
+                if (!countryCodes.contains(countryCode)) {
+                    countryCodes.add(countryCode);
+                }
 
                 // iterate through the other keys to get the information that we need
                 for (String key : countryData.keySet()) {
