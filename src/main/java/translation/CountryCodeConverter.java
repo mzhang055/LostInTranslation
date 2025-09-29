@@ -39,12 +39,19 @@ public class CountryCodeConverter {
             Iterator<String> iterator = lines.iterator();
             iterator.next(); // skip the first line
             while (iterator.hasNext()) {
-                String line = iterator.next();
-                String[] parts = line.split("\t");
-                // TODO Task B: use parts to populate the instance variables
+                String line = iterator.next().trim();
+                if (line.isEmpty()) {
+                    continue;
+                }
+                String[] parts = line.split("\\t+");
+                if (parts.length >= 3) {
+                    String country = parts[0].trim();
+                    String alpha3 = parts[2].trim();
+                    countryCodeToCountry.put(alpha3, country);
+                    countryToCountryCode.put(country, alpha3);
+                }
             }
-        }
-        catch (IOException | URISyntaxException ex) {
+        }catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -56,8 +63,10 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        // TODO Task B: update this code to use an instance variable to return the correct value
-        return code;
+        if (code == null) {
+            return null;
+        }
+        return countryCodeToCountry.get(code.toUpperCase());
     }
 
     /**
@@ -66,8 +75,7 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        // TODO Task B: update this code to use an instance variable to return the correct value
-        return country;
+        return countryToCountryCode.get(country);
     }
 
     /**
@@ -75,7 +83,18 @@ public class CountryCodeConverter {
      * @return how many countries are included in this country code converter.
      */
     public int getNumCountries() {
-        // TODO Task B: update this code to use an instance variable to return the correct value
-        return 0;
+        return countryCodeToCountry.size();
+    }
+
+    /** Return all country names available. */
+    public java.util.Set<String> getAllCountryNames() {
+        return countryToCountryCode.keySet();
+    }
+
+    /**
+     * Return the ISO alpha-3 code for the given country name.
+     */
+    public String toAlpha3(String countryName) {
+        return fromCountry(countryName);
     }
 }
