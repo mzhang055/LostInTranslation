@@ -36,16 +36,16 @@ public class GUI extends JFrame {
     }
 
     private void initData() {
-        for (String langName : languageConverter.getAllLanguageNames()) {
-            String code = languageConverter.toCode(langName);
-            if (code != null) {
+        for (String code : translator.getLanguageCodes()) {
+            String langName = languageConverter.toName(code);
+            if (langName != null) {
                 languageNameToCode.put(langName, code);
             }
         }
 
-        for (String countryName : countryConverter.getAllCountryNames()) {
-            String alpha3 = countryConverter.toAlpha3(countryName);
-            if (alpha3 != null) {
+        for (String alpha3 : translator.getCountryCodes()) {
+            String countryName = countryConverter.fromCountryCode(alpha3.toUpperCase());
+            if (countryName != null) {
                 countryNameToAlpha3.put(countryName, alpha3);
             }
         }

@@ -99,4 +99,11 @@ public class LanguageCodeConverter {
         return fromLanguage(language);
     }
 
+    /**
+     * Return the language name for the given code.
+     */
+    public String toName(String code) {
+        return fromLanguageCode(code);
+    }
+
 }
